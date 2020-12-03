@@ -40,4 +40,7 @@ functions:
     events:
       - http:
           method: GET
-          path: /test/timeout/query
+          path: /test/timeout/query/{type}
+custom:
+  bundle:
+    linting: false
