@@ -30,6 +30,7 @@ const queryTimeout = async (event, context) => {
     console.timeEnd("click");
   } else if (type === "clear") {
     activity = { active: [{ date: moment().format("YYYY-MM-DD"), type: "Customer Activity Cleared" }] };
+  } else if (type === "getTotal") {
   } else {
     activity.active.push({ date: moment().format("YYYY-MM-DD"), type: `Type is NULL` });
   }
@@ -45,12 +46,13 @@ const queryTimeout = async (event, context) => {
     type: type,
     totalTime: new Date() - start,
     activityLength: activity.active.length,
-    result: customerInfo,
+    activity: type === "getTotal" ? activity.active : null,
+    // result: customerInfo,
   };
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: "queryTimeout from Yo moms house", default: { c_id, cor_id, cus_id }, imports }),
+    body: JSON.stringify({ message: "queryTimeout from Yo moms house", default: { c_id, cor_id, cus_id }, imports }, null, 4),
   };
 };
 

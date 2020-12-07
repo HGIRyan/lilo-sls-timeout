@@ -41,6 +41,12 @@ functions:
       - http:
           method: GET
           path: /test/timeout/query/{type}
+  recordRatingCopy:
+    handler: src/handlers/recordRatingCopy.handler
+    events:
+      - http:
+          method: GET
+          path: /test/timeout/record-rating-copy
 custom:
   bundle:
     linting: false
