@@ -38,6 +38,7 @@ const query = async (sql, values) => {
     const client = await pool.connect();
 
     const result = await client.query(sql, values);
+    client.release();
 
     return result.rows;
   } catch (error) {

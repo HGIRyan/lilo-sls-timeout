@@ -12,6 +12,11 @@ provider:
   memorySize: 256
   stage: ${opt:stage, 'ryan'}
   region: us-east-1
+  vpc:
+    securityGroupIds:
+      - sg-01b11e30549f88170
+    subnetIds:
+      - subnet-0cba10d6dcf33c533
 
 resources:
   Resources:
@@ -40,13 +45,20 @@ functions:
     events:
       - http:
           method: GET
-          path: /test/timeout/query/{type}
+          path: /test/timeout/query/{type}/{cus_id}
+  queryTimeoutPost:
+    handler: src/handlers/queryTimeout.handler
+    events:
+      - http:
+          method: POST
+          path: /post/test/timeout/query
   recordRatingCopy:
     handler: src/handlers/recordRatingCopy.handler
     events:
       - http:
           method: GET
           path: /test/timeout/record-rating-copy
+    timeout: 7
 custom:
   bundle:
     linting: false

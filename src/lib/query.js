@@ -16,7 +16,7 @@ const config = {
   dbClusterIdentifier: "database-1",
 };
 
-export const query = async (sql, values, end) => {
+export const query = async (sql, values) => {
   try {
     const pool = new Pool(config);
 
@@ -27,11 +27,10 @@ export const query = async (sql, values, end) => {
 
     // const client = await pool.connect();
 
-    const result = await pool.query(sql, values);
+    const client = await pool.connect();
 
-    if (end) {
-      await pool.end();
-    }
+    const result = await client.query(sql, values);
+    client.release();
 
     return result.rows;
   } catch (error) {
